@@ -8,12 +8,24 @@ Template.hello.onCreated(function helloOnCreated() {
   var ct = this;
   this.counter = new ReactiveVar(0);
   this.test = new ReactiveVar("Default");
-  HTTP.call("GET","http://localhost:3000/ws",{}, function (err,res){
+  this.movies = new ReactiveVar([]);
+  // call fichier json
+/*  HTTP.call("GET","http://localhost:3000/movies",{}, function (err,res){
     if (err){
       console.log(err);
     }else{
-      console.log(res.content);
-      ct.test.set(res.content);
+      ct.movies.set(JSON.parse(res.content).results);
+      console.log(JSON.parse(res.content).results);
+    }
+  });*/
+
+// partie api web
+  HTTP.call("GET","http://localhost:3000/api/movies",{}, function (err,res){
+    if (err){
+      console.log(err);
+    }else{
+      ct.movies.set(JSON.parse(res.content).results);
+      //console.log(JSON.parse(res.content).results);
     }
   });
 });
@@ -24,6 +36,9 @@ Template.hello.helpers({
   },
   test(){
     return Template.instance().test.get();
+  },
+  movies() {
+    return Template.instance().movies.get();
   }
 });
 
