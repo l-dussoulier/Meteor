@@ -2,10 +2,25 @@ body {
   padding: 10px;
   font-family: sans-serif;
 }
-
-.film{
-  margin: 10px;
+.card-horizontal {
+  display: flex;
+  flex: 1 1 auto;
 }
+
+img {
+  height: 330px;
+  width: 220px;
+}
+
+.icon-vote {
+  font-size: 1.2em;
+  margin-right: 8px;
+}
+
+.icon-vote:hover {
+  cursor: pointer;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
