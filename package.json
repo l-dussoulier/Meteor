@@ -24,6 +24,6 @@
   "devDependencies": {
     "postcss-import": "^14.0.0",
     "postcss-load-config": "^1.2.0",
-    "tailwindcss": "^2.0.2"
+    "tailwindcss": "^2.0.4"
   }
 }
