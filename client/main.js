@@ -8,11 +8,29 @@ import './main.html';
 // --- ROUTING ---//
 
 
+Template.navbar.events({
+  'click .acteursClick':function(event){
+    BlazeLayout.render("acteurs");
+  }
+});
+
+Template.navbar.events({
+  'click .helloClick':function(event){
+    BlazeLayout.render("hello");
+  }
+});
+
+
+
 FlowRouter.route('/:acteurId', {
   action: function(params, queryParams) {
     console.log("Id acteur", queryParams);
+    BlazeLayout.render("detail");
   },
 });
+
+
+
 
 // ---END  ROUTING ---//
 
@@ -20,6 +38,7 @@ FlowRouter.route('/:acteurId', {
 
 // --- PARTIE DISCOVER --- ///
 Template.hello.onCreated(function helloOnCreated() {
+
   var ct = this;
   this.counter = new ReactiveVar(0);
   this.test = new ReactiveVar("Default");
