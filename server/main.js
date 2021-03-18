@@ -85,4 +85,21 @@ WebApp.connectHandlers.use('/api/acteurs', (req, res, next) => {
     }));
 });
 
+WebApp.connectHandlers.use('/api/acteur', (req, res, next) => {
+    var idActeur = req.url.split("/")[1].replace("?idActeur=", "")
+    JSON.stringify(HTTP.call("GET","https://api.themoviedb.org/3/person/"+idActeur+"?api_key=1793c4843a64fbd6fdba88ce08e45c5f&language=fr-FR",{},function (err,response){
+        if (err) {
+            console.log(err);
+            res.writeHead(500);
+        } else {
+            res.end(JSON.stringify(response.data));
+            res.writeHead(200);
+        }
+    }));
+});
+
+
+
+
+
 // --- END ACTEURS --- //

@@ -4,8 +4,9 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
-
 // --- ROUTING ---//
+
+var acteur = new ReactiveVar([]);
 
 
 Template.navbar.events({
@@ -25,10 +26,17 @@ Template.navbar.events({
 FlowRouter.route('/:acteurId', {
   action: function(params, queryParams) {
     console.log("Id acteur", queryParams);
-    BlazeLayout.render("detail");
+    HTTP.call("GET","http://localhost:3000/api/acteur?idActeur="+queryParams.idacteur,{}, function (err,res){
+      if (err){
+        console.log(err);
+      } else{
+        acteur.set(JSON.parse(res.content));
+        BlazeLayout.render("detail");
+      }
+    });
+
   },
 });
-
 
 
 
@@ -146,8 +154,18 @@ Template.acteurs.events({
 
 
 
+
 // --- END PARTIE ACTEURS --- ///
 
+Template.detail.onCreated(function acteursOnCreated() {
+  var ct = this;
+  this.acteur = acteur;
+});
+Template.detail.helpers({
+  acteur() {
+    return Template.instance().acteur.get();
+  }
+});
 
 
 
