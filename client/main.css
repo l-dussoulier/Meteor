@@ -21,6 +21,23 @@ img {
   cursor: pointer;
 }
 
+.row {
+  padding-left: 15em;
+  padding-right: 15em;
+}
+
+.col {
+  min-width: 17em;
+  max-width: 20em;
+  max-height: 20em;
+  margin-bottom: 1em;
+}
+
+.card-img-top {
+  max-height: 15em;
+  object-fit: cover;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
