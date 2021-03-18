@@ -68,3 +68,17 @@ WebApp.connectHandlers.use('/api/updateVote', (req, res, next) => {
         res.end(JSON.stringify(newVoteCount));
     }));
 });
+
+// Partie Acteurs
+
+WebApp.connectHandlers.use('/api/acteurs', (req, res, next) => {
+    JSON.stringify(HTTP.call("GET","https://api.themoviedb.org/3/person/popular?api_key=1793c4843a64fbd6fdba88ce08e45c5f&language=fr-FR&page=1",{},function (err,response){
+        if (err) {
+            console.log(err);
+            res.writeHead(500);
+        } else {
+            res.end(JSON.stringify(response.data));
+            res.writeHead(200);
+        }
+    }));
+});
