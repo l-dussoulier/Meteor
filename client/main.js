@@ -86,8 +86,8 @@ Template.acteurs.onCreated(function acteursOnCreated() {
     if (err){
       console.log(err);
     } else{
-      //ct.acteurs.set(JSON.parse(res.content).results);
-      console.log(res);
+      ct.acteurs.set(JSON.parse(res.content).results);
+      console.log(JSON.parse(res.content).results);
     }
   });
 });

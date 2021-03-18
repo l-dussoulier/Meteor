@@ -10,7 +10,10 @@
 </body>
 
 <template name="acteurs">
-<p>COUCOU</p>
+{{#each acteurs}}
+    <p>{{name}}</p>
+    <img src="https://www.themoviedb.org/t/p/w440_and_h660_face{{profile_path}}" alt="Card image cap">
+{{/each }}
 </template>
 
 <template name="hello">
