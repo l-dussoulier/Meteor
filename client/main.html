@@ -1,3 +1,21 @@
+<template name="acteurs">
+    <h1>Liste des acteurs</h1>
+
+
+    <div class="row row-cols-3 row-cols-md-3 g-4">
+        {{#each acteurs}}
+            <div class="col" style="max-width: 20em; min-width: 20em">
+                <div class="card">
+                    <img src="https://www.themoviedb.org/t/p/w440_and_h660_face{{profile_path}}" class="card-img-top" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{name}}</h5>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</template>
+
 <head>
     <script src="https://kit.fontawesome.com/7b2ae56766.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -8,13 +26,6 @@
   {{> acteurs}}
   {{> hello}}
 </body>
-
-<template name="acteurs">
-{{#each acteurs}}
-    <p>{{name}}</p>
-    <img src="https://www.themoviedb.org/t/p/w440_and_h660_face{{profile_path}}" alt="Card image cap">
-{{/each }}
-</template>
 
 <template name="hello">
     <div class="container">
