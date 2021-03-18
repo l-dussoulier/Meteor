@@ -2,11 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { localDatas} from "./local-datas";
 
+// --- PARTIE DISCOVER --- //
+
 const films = new Mongo.Collection('films');
 
 Meteor.startup(() => {
-  // code to run on server at startup
-    console.log("coucou");
 });
 
 WebApp.connectHandlers.use('/ws', (req, res, next) => {
@@ -69,7 +69,9 @@ WebApp.connectHandlers.use('/api/updateVote', (req, res, next) => {
     }));
 });
 
-// Partie Acteurs
+// --- END PARTIE DISCOVER --- //
+
+// --- ACTEURS --- //
 
 WebApp.connectHandlers.use('/api/acteurs', (req, res, next) => {
     JSON.stringify(HTTP.call("GET","https://api.themoviedb.org/3/person/popular?api_key=1793c4843a64fbd6fdba88ce08e45c5f&language=fr-FR&page=1",{},function (err,response){
@@ -82,3 +84,5 @@ WebApp.connectHandlers.use('/api/acteurs', (req, res, next) => {
         }
     }));
 });
+
+// --- END ACTEURS --- //

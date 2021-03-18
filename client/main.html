@@ -12,7 +12,7 @@
 <template name="acteurs">
 {{#each acteurs}}
     <p>{{name}}</p>
-    <img src="https://www.themoviedb.org/t/p/w440_and_h660_face{{profile_path}}" alt="Card image cap">
+    <img class="imgActeur" data-id="{{id}}" src="https://www.themoviedb.org/t/p/w440_and_h660_face{{profile_path}}" alt="Card image cap">
 {{/each }}
 </template>
 

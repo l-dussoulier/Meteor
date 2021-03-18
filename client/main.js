@@ -1,10 +1,25 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
+
 import './main.html';
 
+
+// --- ROUTING ---//
+
+
+FlowRouter.route('/:acteurId', {
+  action: function(params, queryParams) {
+    console.log("Id acteur", queryParams);
+  },
+});
+
+// ---END  ROUTING ---//
+
+
+
+// --- PARTIE DISCOVER --- ///
 Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
   var ct = this;
   this.counter = new ReactiveVar(0);
   this.test = new ReactiveVar("Default");
@@ -68,12 +83,10 @@ function updateVote(element, like) {
   });
 }
 
-// acteurs
-//
-//
-//
+// --- END PARTIE DISCOVER --- ///
 
 
+// --- PARTIE ACTEURS --- ///
 
 Template.acteurs.onCreated(function acteursOnCreated() {
   var ct = this;
@@ -102,4 +115,21 @@ Template.acteurs.helpers({
     return Template.instance().acteurs.get();
   }
 });
+
+
+Template.acteurs.events({
+  'click .imgActeur':function(event){
+    // permet d'appeler la route avec des parametres
+    FlowRouter.go('/acteurs/?idacteur='+event.currentTarget.dataset.id);
+
+  }
+});
+
+
+
+// --- END PARTIE ACTEURS --- ///
+
+
+
+
 
