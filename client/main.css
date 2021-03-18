@@ -21,7 +21,7 @@ img {
   cursor: pointer;
 }
 
-.row {
+.rowlist {
   padding-left: 15em;
   padding-right: 15em;
 }
@@ -36,6 +36,16 @@ img {
 .card-img-top {
   max-height: 15em;
   object-fit: cover;
+}
+
+.details{
+  max-width: 1500px;
+  border: none;
+  padding-top: 1em;
+}
+
+.col-md-4{
+  max-width: 15em!important;
 }
 
 @tailwind base;
