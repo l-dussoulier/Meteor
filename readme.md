@@ -1,4 +1,4 @@
-##Web Services - The Movie Database
+## Web Services - The Movie Database
 
 Ce projet Meteor exploite l'API The Move Database afin de proposer aux utilisateurs 
 une liste de films et d'acteurs. L'utilisateur à la possibilité de "liker" ou "disliker"
