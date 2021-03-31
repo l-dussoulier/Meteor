@@ -1,13 +1,13 @@
 body {
-  padding: 10px;
   font-family: sans-serif;
 }
+
 .card-horizontal {
   display: flex;
   flex: 1 1 auto;
 }
 
-img {
+.img-affiche {
   height: 330px;
   width: 220px;
 }
@@ -28,14 +28,12 @@ img {
 
 .col {
   min-width: 17em;
-  max-width: 20em;
-  max-height: 20em;
   margin-bottom: 1em;
 }
 
 .card-img-top {
-  max-height: 15em;
-  object-fit: cover;
+  width: 220px;
+  height: 330px;
 }
 
 .details{
@@ -44,8 +42,8 @@ img {
   padding-top: 1em;
 }
 
-.col-md-4{
-  max-width: 15em!important;
+.img-acteur:hover {
+  cursor: pointer;
 }
 
 @tailwind base;

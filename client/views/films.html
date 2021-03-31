@@ -1,0 +1,31 @@
+<template name="films">
+    <div class="container">
+        <h1>Liste des films</h1>
+        {{#each films}}
+            <div class="card">
+                <div class="card-horizontal">
+                    <div class="img-square-wrapper">
+                        <img class="img-affiche" src="https://www.themoviedb.org/t/p/w440_and_h660_face{{public_data.poster_path}}" alt="Card image cap">
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">{{public_data.title}}</h4>
+                        <p class="card-text text-justify">{{public_data.overview}}</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="float-right">
+                        <div class="text-muted float-left mr-3 pt-1">
+                            Votes :
+                            <span class="font-weight-bold count-vote">{{private_data.vote_count}}</span>
+                        </div>
+                        <div class="icons float-right">
+                            <i class="fas fa-thumbs-up icon-vote like" data-id="{{public_data.id}}" style="color: #3f923f"></i>
+                            <i class="fas fa-thumbs-down icon-vote dislike" data-id="{{public_data.id}}" style="color : #df4b30"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        {{/each }}
+    </div>
+</template>

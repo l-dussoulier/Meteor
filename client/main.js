@@ -1,172 +1,185 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-
 import './main.html';
+import './views/layout/navigation.html'
 
-// --- ROUTING ---//
+import './views/films.html'
+import './views/acteurs.html'
+import './views/detailsActeurs.html'
 
-var acteur = new ReactiveVar([]);
+// ---------------------------------------------- ROUTING ---------------------------------------------------------- ///
 
+// On affiche la liste des films au démarrage de l'application
+BlazeLayout.render('films');
 
-Template.navbar.events({
-  'click .acteursClick':function(event){
-    BlazeLayout.render("acteurs");
+// Event listener permettant d'afficher la liste des films
+Template.navigation.events({
+  'click .nav-films' : function(event) {
+    BlazeLayout.render('films');
+
+    event.currentTarget.parentElement.classList.add("active");
+    document.getElementsByClassName('nav-acteurs')[0].parentElement.classList.remove('active');
   }
 });
 
-Template.navbar.events({
-  'click .helloClick':function(event){
-    BlazeLayout.render("hello");
+// Event listener permettant d'afficher la liste des acteurs
+Template.navigation.events({
+  'click .nav-acteurs' : function(event) {
+    BlazeLayout.render('acteurs');
+
+    event.currentTarget.parentElement.classList.add("active");
+    document.getElementsByClassName('nav-films')[0].parentElement.classList.remove('active');
   }
 });
+// ---------------------------------------------- END ROUTING ------------------------------------------------------ ///
 
 
+// -------------------------------------------------  FILMS -------------------------------------------------------- ///
 
-FlowRouter.route('/:acteurId', {
-  action: function(params, queryParams) {
-    console.log("Id acteur", queryParams);
-    HTTP.call("GET","http://localhost:3000/api/acteur?idActeur="+queryParams.idacteur,{}, function (err,res){
-      if (err){
-        console.log(err);
-      } else{
-        acteur.set(JSON.parse(res.content));
-        BlazeLayout.render("detail");
-      }
-    });
+// On récupère la liste des films à la création du template
+Template.films.onCreated(function() {
+  const context = this;
+  this.films = new ReactiveVar([]);
 
-  },
-});
-
-
-
-// ---END  ROUTING ---//
-
-
-
-// --- PARTIE DISCOVER --- ///
-Template.hello.onCreated(function helloOnCreated() {
-
-  var ct = this;
-  this.counter = new ReactiveVar(0);
-  this.test = new ReactiveVar("Default");
-  this.movies = new ReactiveVar([]);
-
-  // partie api web
-  HTTP.call("GET","http://localhost:3000/api/movies",{}, function (err,res){
+  HTTP.call("GET","http://localhost:3000/api/movies",{}, function (err,res) {
     if (err){
       console.log(err);
     } else{
-      ct.movies.set(JSON.parse(res.content).results);
-      //console.log(JSON.parse(res.content).results);
+      context.films.set(JSON.parse(res.content));
     }
   });
 });
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-  test(){
-    return Template.instance().test.get();
-  },
-  movies() {
-    return Template.instance().movies.get();
+
+Template.films.helpers({
+  films() {
+    return Template.instance().films.get();
   }
 });
 
-
-Template.hello.events({
-  'click .like':function(event){
+// Event listener permettant de "liker" film
+Template.films.events({
+  'click .like' : function(event) {
     updateVote(event.currentTarget, true);
   }
 });
 
-Template.hello.events({
-  'click .dislike':function(event) {
+// Event listener permettant de "disliker" un film
+Template.films.events({
+  'click .dislike' : function(event) {
     updateVote(event.currentTarget, false);
   }
 });
 
+// Appel au serveur permettant de stocker le vote
 function updateVote(element, like) {
-  console.log(element.dataset.votecount)
-  HTTP.call("POST", "http://localhost:3000/api/updateVote",
+  HTTP.call("POST", "http://localhost:3000/api/voteFilm",
       {
         headers: {
           "content-type":"application/json",
           "Accept":"application/json"
         },
         data: {
-          'id': parseInt(element.dataset.id),
+          'id': element.dataset.id,
           'like': like,
-          'vote_count': parseInt(element.dataset.votecount)
         }
       },
-      function (err,res) {
+      function(err,res) {
         if (err) {
           console.log(err);
         } else {
-          element.closest('.card-footer').getElementsByClassName('count-vote')[0].innerHTML = res.content;
+          let span = element.closest('.card-footer').getElementsByClassName('count-vote')[0];
+          span.innerHTML = like ? parseInt(span.innerHTML) + 1 : parseInt(span.innerHTML) - 1;
         }
   });
 }
+// ------------------------------------------------- END FILMS ----------------------------------------------------- ///
 
-// --- END PARTIE DISCOVER --- ///
 
 
-// --- PARTIE ACTEURS --- ///
+// -------------------------------------------------- ACTEURS ------------------------------------------------------ ///
 
-Template.acteurs.onCreated(function acteursOnCreated() {
-  var ct = this;
-  this.counter = new ReactiveVar(0);
-  this.test = new ReactiveVar("Default");
+// On récupère la liste des acteurs à la création du template
+Template.acteurs.onCreated(function() {
+  const context = this;
   this.acteurs = new ReactiveVar([]);
 
-
   HTTP.call("GET","http://localhost:3000/api/acteurs",{}, function (err,res){
-    if (err){
+    if (err) {
       console.log(err);
-    } else{
-      ct.acteurs.set(JSON.parse(res.content).results);
-      console.log(JSON.parse(res.content).results);
+    } else {
+      context.acteurs.set(JSON.parse(res.content));
     }
   });
 });
+
 Template.acteurs.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-  test(){
-    return Template.instance().test.get();
-  },
   acteurs() {
     return Template.instance().acteurs.get();
   }
 });
 
-
+// Event listener permettant d'afficher les détails d'un acteur
 Template.acteurs.events({
-  'click .imgActeur':function(event){
-    // permet d'appeler la route avec des parametres
-    FlowRouter.go('/acteurs/?idacteur='+event.currentTarget.dataset.id);
-
+  'click .img-acteur' : function(event) {
+    const id = event.currentTarget.dataset['id'];
+    BlazeLayout.render('detailsActeurs', {idActeur : id});
   }
 });
+// ----------------------------------------------- END ACTEURS ----------------------------------------------------- ///
 
 
 
+// -------------------------------------------- DETAILS ACTEURS ---------------------------------------------------- ///
 
-// --- END PARTIE ACTEURS --- ///
+// On récupère les détails de l'acteur à la création du template
+Template.detailsActeurs.onCreated(function() {
+  const context = this;
+  this.acteur =  new ReactiveVar([]);
 
-Template.detail.onCreated(function acteursOnCreated() {
-  var ct = this;
-  this.acteur = acteur;
+  const idActeur = this.data.idActeur();
+
+  HTTP.call("GET","http://localhost:3000/api/acteur?idActeur=" + idActeur,{},
+      function(err,res) {
+        if (err) {
+          console.log(err);
+        } else {
+          context.acteur.set(JSON.parse(res.content));
+          initialiseRating(context.acteur.get().private_data.rating);
+        }
+      });
 });
-Template.detail.helpers({
+
+Template.detailsActeurs.helpers({
   acteur() {
     return Template.instance().acteur.get();
   }
 });
 
+// Event listener permettant de noter un acteur
+Template.detailsActeurs.events({
+  'click .star' : function(event) {
+    // Appel au serveur permettant de stocker la note
+    HTTP.call("POST", "http://localhost:3000/api/voteActeur",
+        {
+          headers: {
+            "content-type":"application/json",
+            "Accept":"application/json"
+          },
+          data: {
+            'id': event.currentTarget.parentElement.dataset['id'],
+            'rating': event.currentTarget.dataset['value'],
+          }
+        },
+        function(err,res) {
+          if (err) {
+            console.log(err);
+          }
+        });
+  }
+});
+
+// ------------------------------------------- END DETAILS ACTEURS ------------------------------------------------- ///
 
 
 

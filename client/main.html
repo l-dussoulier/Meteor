@@ -1,102 +1,17 @@
-
-
 <head>
     <script src="https://kit.fontawesome.com/7b2ae56766.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <title>myapp</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
+    <title>WebServices - The Movie DB</title>
 </head>
 
 <body>
-  {{> navbar}}
-
+  {{> navigation}}
 </body>
 
-<template name="navbar">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">ZEBI METEOR</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link helloClick" href="#">Découverte<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link acteursClick" href="#">Acteurs</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</template>
 
 
-<template name="detail">
-    <div class="card mb-3 details">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="https://www.themoviedb.org/t/p/w440_and_h660_face{{acteur.profile_path}}" alt="img">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h1>{{acteur.name}}</h1>
-                    <p>{{acteur.biography}}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
-
-<template name="acteurs">
-    <h1>Liste des acteurs</h1>
-    <div class="row row-cols-3 row-cols-md-3 g-4 rowlist">
-        {{#each acteurs}}
-            <div class="col imgActeur" data-id="{{id}}">
-                <div class="card">
-                    <img src="https://www.themoviedb.org/t/p/w440_and_h660_face{{profile_path}}" class="card-img-top" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">{{name}}</h5>
-                    </div>
-                </div>
-            </div>
-        {{/each}}
-    </div>
-</template>
-
-
-
-
-<template name="hello">
-    <div class="container">
-        <h1>Liste Films</h1>
-        {{#each movies}}
-            <div class="card">
-                <div class="card-horizontal">
-                    <div class="img-square-wrapper">
-                        <img src="https://www.themoviedb.org/t/p/w440_and_h660_face{{poster_path}}" alt="Card image cap">
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">{{title}}</h4>
-                        <p class="card-text text-justify">{{overview}}</p>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="float-right">
-                        <div class="text-muted float-left mr-3 pt-1">
-                            Votes :
-                            <span class="font-weight-bold count-vote">{{vote_count}}</span>
-                        </div>
-                        <div class="icons float-right">
-                            <i class="fas fa-thumbs-up icon-vote like" data-id="{{id}}" data-voteCount="{{vote_count}}" style="color: #3f923f"></i>
-                            <i class="fas fa-thumbs-down icon-vote dislike" data-id="{{id}}" data-voteCount="{{vote_count}}" style="color : #df4b30"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-        {{/each }}
-    </div>
-</template>
 
 
 

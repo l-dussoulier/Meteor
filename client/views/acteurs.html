@@ -1,0 +1,17 @@
+<template name="acteurs">
+    <div class="container">
+        <h1>Liste des acteurs</h1>
+        <div class="row g-4">
+            {{#each acteurs}}
+                <div class="col-md-3 mb-3">
+                    <div class="card">
+                        <img src="https://www.themoviedb.org/t/p/w440_and_h660_face{{public_data.profile_path}}" class="card-img-top img-acteur" data-id="{{public_data.id}}" />
+                        <div class="card-body p-2">
+                            <h5 class="card-title text-center">{{public_data.name}}</h5>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</template>
